@@ -1,0 +1,12 @@
+# Ignore everything (files and folders)
+*
+# Whitelist .gitignore
+!.gitignore
+
+# Whitelist folders:
+!*/
+
+# Whitelist folder contents:
+!/00_how_to_docker/*
+!/01_dockerfiles/*
+!/02_bonus/*
