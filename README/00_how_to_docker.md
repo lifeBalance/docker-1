@@ -2,13 +2,18 @@
 For this part we just have to write Docker commands into files (no need to make them executable).
 
 ## Exercise 1
-For this exercise we have to: Get the [hello-world](https://hub.docker.com/_/hello-world) container from the [Docker Hub](https://hub.docker.com), where it’s available.
+For this exercise we have to: Get the [hello-world](https://hub.docker.com/_/hello-world) container from the [Docker Hub](https://hub.docker.com).
 
 As we mentioned in our introduction, **Docker Hub** is an important part of the Docker ecosystem. If we visit the site, we can **search** for any image available in the repository. Typing `hello world` takes us to the *hello world's* **official image**, so we just have to copy the command and paste it in our terminal.
 
 ![pull hello world](./images/pull_hello_world_image.png)
 
-That will **download** the hello world **image** to some location in our disk. This location depends on the **host** where we're using Docker:
+That will **download** the hello world **image** to some location in our disk. To verify that we downloaded the `hello-world` image to our disk, we can run:
+```
+docker images
+```
+
+ This location depends on the **host** where we're using Docker:
 * In a Linux host, images are stored in `/var/lib`
 * In a macOS host, Docker stores images in a single, large disk image (64 GB on my system) under:
 ```
@@ -30,7 +35,7 @@ Launch a [nginx container](https://hub.docker.com/_/nginx), available on Docker 
 
 1. It should be run as a **background** task.
 2. It should be named `overlord`.
-3. It should be able to restart on its own.
+3. It should be able to **restart** on its own.
 4. It should have its `80` port attached to the `5000` port of your machine. You can check that your container functions properly by visiting http://localhost:5000 on your web browser.
 
 1. To run a container in the [background](https://docs.docker.com/engine/reference/run/#detached-vs-foreground) (so we don't lose access to our command prompt) we should use `-d=true` or just `-d`.
@@ -67,7 +72,30 @@ For this exercise we have to:
 2. Since we must interact with the shell, we'll have to use the ``--interactive`` option (`-i` for short) plus allocate a pseudo-TTY using the ``--tty`` option (``-t`` for short).
 3. In order to [clean up](https://docs.docker.com/engine/reference/run/#clean-up---rm) the container upon finishing execution, we'll use the ``--rm`` flag.
 
+According to the documentation, a Docker container that runs in foreground mode will only have its **standard output stream** (`STDOUT`) and **standard error stream** (`STDERR`) attached if we don’t add the ``-a`` option. That's because those are the only necessary streams to output stuff, or return the return value (`0` if all went OK).
 
+![docker streams](./images/docker_streams.png)
+
+We can run a **shell process** in two modes:
+
+* In **non-interactive mode**, the shell executes the script passed to it and exits (we'd use `docker exec` for this).
+* In **interactive mode**, the shell listens to the commands through the **standard input stream** (`STDIN`) on a terminal.
+
+## Exercise 6
+For this exercise we have to:
+
+1. Launch a [Debian](https://hub.docker.com/_/debian) container.
+2. Make sure that the **package manager** and the **packages** already in the container are updated.
+3. Install via the container’s package manager everything you need to compile C source code and push it onto a git repo.
+
+For this exercise, we should **only** specify the commands to be run directly in the container (which implies we must use `docker exec`).
+
+So, in order to launch an interactive Debian container, we can use:
+```
+docker run -it --rm debian /bin/bash
+```
+
+Then it's a matter of installing `git`, a compiler such as `gcc`, and a build tool like `make`; in short, all the necessary stuff to compile C code.
 ---
 [:arrow_backward:][back] ║ [:house:][home] ║ [:arrow_forward:][next]
 
