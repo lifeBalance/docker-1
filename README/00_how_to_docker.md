@@ -56,6 +56,18 @@ That will produce all the **container information** as a [JSON](https://en.wikip
 
 Since the output was a bit overwhelming, I decided to redirect it to a file named `overlord.json`, and study it carefully in my text editor. Then it was a matter of locating the **nested object** named `NetworkSettings`, and then access its `IPAddress` property using **dot notation**.
 
+## Exercise 5
+For this exercise we have to:
+
+1. Launch a shell in an [alpine](https://hub.docker.com/_/alpine) container.
+2. This shell must be **interactive**.
+3. The **container** must delete itself when we **log out** of the shell.
+
+1. [Alpine Linux](https://alpinelinux.org/) is a security-oriented, lightweight Linux distribution. We can `pull` its official **image** from **Docker Hub**, while at the same time **spin** a container using `docker run alpine`.
+2. Since we must interact with the shell, we'll have to use the ``--interactive`` option (`-i` for short) plus allocate a pseudo-TTY using the ``--tty`` option (``-t`` for short).
+3. In order to [clean up](https://docs.docker.com/engine/reference/run/#clean-up---rm) the container upon finishing execution, we'll use the ``--rm`` flag.
+
+
 ---
 [:arrow_backward:][back] ║ [:house:][home] ║ [:arrow_forward:][next]
 
