@@ -205,6 +205,28 @@ In this exercise we're asked to **relaunch** the overlord container. For restart
 
 After running this command we could do a `docker ps` to check the time the container has been running (under the `STATUS` column).
 
+## Exercise 16
+For this exercise we have to:
+
+1. Launch a Python container (`2-slim` version), named `Abathur`.
+2. Its `/root` folder will be bound to the `HOME` folder on your **host**.
+3. Its **port 3000** will be bound to the **port 3000** of your virtual machine.
+4. We will install latest version of the the [Flask micro-framework](https://flask.palletsprojects.com/en/2.0.x/), and make it serve an html page displaying `"Hello World"` with `<h1>`. We will test that pointing `curl` or a **web browser**, to the IP address of your virtual machine on the **port 3000**.
+
+> We have to also list all the necessary commands to set up our **Flask webapp**.
+
+1. We can pull a specific version of an **image** using the syntax `image:version`.
+2. In this case we have to use a [bind mount](https://docs.docker.com/storage/bind-mounts/) to mount the `HOME` directory on the **host** into the container. Same as with volumes, we can use the `--mount` or `-v` options; in this case we use as argument the syntax `/path/in/host:/path/in/container` (we don't need any **options** in the 3rd argument).
+3. To publish the port, we use the familiar syntax `host_port:container_port`.
+4. To execute commands on a running container we use `docker exec`. So in this case, we need to:
+
+ * Install a Python package named `Flask`, using `pip`.
+ * Run our `Flask` webapp.
+
+I decided to add the app itself in a separate file named `app.py`, that we can place in the `HOME` folder of our **host** machine so that will be available at the **bind mount** of the container, at the `/root` directory.
+
+> Don't forget to move/copy the `app.py` to the root of your home directory during evaluation.
+
 ---
 [:arrow_backward:][back] ║ [:house:][home] ║ [:arrow_forward:][next]
 
