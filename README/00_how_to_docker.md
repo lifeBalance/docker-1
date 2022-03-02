@@ -194,6 +194,17 @@ In order to access the `spawning-pool` container’s logs in real time without r
 
 > If when checking the logs you find the `mbind: Operation not permitted` error, you may want to restart the MySQL container with `--security-opt seccomp=unconfined` (don't forget to re-add it to the network).
 
+## Exercise 14
+Display all the currently **active** containers on your machine. If, by *active*, we understand **running**, then we have to use `docker ps` (if we wanted to see them all, we would add the `--all` flag, `-a` for short).
+
+## Exercise 15
+In this exercise we're asked to **relaunch** the overlord container. For restarting containers we have two options:
+
+1. After **version 1.13**: `docker container restart overlord'
+2. Prior to **version 1.13**: `docker restart overlord'
+
+After running this command we could do a `docker ps` to check the time the container has been running (under the `STATUS` column).
+
 ---
 [:arrow_backward:][back] ║ [:house:][home] ║ [:arrow_forward:][next]
 
