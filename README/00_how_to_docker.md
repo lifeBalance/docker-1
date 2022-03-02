@@ -88,9 +88,7 @@ For this exercise we have to:
 2. Make sure that the **package manager** and the **packages** already in the container are updated.
 3. Install via the container’s package manager everything you need to compile C source code and push it onto a git repo.
 
-For this exercise, we should **only** specify the commands to be run directly in the container (which implies we must use `docker exec`).
-
-So, in order to launch an interactive Debian container, we can use:
+For this exercise, we should **only** specify the commands to be run directly in the container, which implies we must launch an **interactive** Debian container:
 ```
 docker run -it --rm debian /bin/bash
 ```
@@ -144,6 +142,57 @@ The `-v` flag consists of **three fields** separated by **colon characters** (`:
 Here we're asked to print the **environment variables** of the `spawning-pool` container, which we can use to verify that is configured according to the requirements established in the last exercise.
 
 We'll use the `docker inspect` command, along with the `--format` option. To print the **environment variables** we'll use a [Go template](https://pkg.go.dev/text/template) with the `.Config.Env` key.
+
+## Exercise 11
+In this exercise we have to:
+
+1. Launch a [wordpress](https://wordpress.com/) container as a **background** task.
+2. The container should be named `lair`.
+3. Its **port 80** should be bound to the **port 8080** of a **virtual machine**.
+4. It should be able to use the `spawning-pool` container as a **database service**.
+
+At the end of this, we should be able to access `lair` on our **host machine** via a web browser, with the IP address of the **virtual machine** as a URL.
+
+1. To launch the container in the background we used `-d`.
+2. To name it, `--name` followed by the name `lair`.
+3. To bind the ports we used `-p 8080:80`.
+4. To set up the connection to the database container we used several **environment variables** using the `-e` flag.
+
+> Apparently, for this exercise, both containers can be run in the same **Docker Host**, so no need to install Docker in a **virtual machine** for now.
+
+Once the **WordPress container** is running, we have to find a way for it to connect with the **MySQL container**. Considering that the `--link` option is already **deprecated**, these are the steps we followed:
+
+1. Create a network:
+```
+docker network create wp_mysql_net
+```
+
+2. Connect both containers to the network:
+```
+docker network connect wp_mysql_net spawning-pool
+docker network connect wp_mysql_net lair
+```
+
+Finally, to test that everything works, we just have to point our web browser to `http://localhost:8080`, and create some post on our WordPress site.
+
+## Exercise 12
+For this exercise we have to:
+
+1. Launch a [phpmyadmin](https://www.phpmyadmin.net/) container as a **background** task.
+2. It should be named `roach-warden`.
+3. Its **port 80** should be bound to the **port 8081** of the virtual machine and it should be able to explore the database stored in the `spawning-pool` container.
+
+Luckily for us, **Docker Hub** offers a [phpmyadmin official image](https://hub.docker.com/_/phpmyadmin). Pulling and spinning a **container** based on this image shouldn't be a problem, we just have to use the commands we're already familiar with. In order to connect it to the other containers, we have to connect the `roach-warden` to the same network used by the `spawning-pool` container (the one serving the MySQL database):
+```
+docker network connect wp_mysql_net roach-warden
+```
+
+Finally, to test that everything works, we just have to point our web browser to `http://localhost:8081`, and logging in using the `root` credentials (`Kerrigan`) we created for the database.
+
+## Exercise 13
+In order to access the `spawning-pool` container’s logs in real time without running its shell, we can use the `docker logs` command. The `--follow` option (`-f` for short) allows us to *follow* the logs in real time.
+
+> If when checking the logs you find the `mbind: Operation not permitted` error, you may want to restart the MySQL container with `--security-opt seccomp=unconfined` (don't forget to re-add it to the network).
 
 ---
 [:arrow_backward:][back] ║ [:house:][home] ║ [:arrow_forward:][next]
