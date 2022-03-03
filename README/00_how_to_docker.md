@@ -227,6 +227,37 @@ I decided to add the app itself in a separate file named `app.py`, that we can p
 
 > Don't forget to move/copy the `app.py` to the root of your home directory during evaluation.
 
+## Exercise 17
+Here we have to:
+
+1. Create a local **swarm**.
+2. Our local machine (the school iMac) should be its **manager**.
+
+> Read notes about Docker swarms.
+
+We can achieve both things simultaneously using the [docker swarm init](https://docs.docker.com/engine/reference/commandline/swarm_init/) command. The docker engine targeted where we run this command becomes a **manager** in the newly created swarm (a **single-node** swarm for now).
+
+> We can check that the Docker engine in our **host machine** has become a node (the `Leader`) using `docker node ls`, which as the syntax implies, allows us to list the nodes in a swarm.
+
+## Exercise 18
+In this exercise we have to:
+
+1. Create a **virtual machine** using virtualbox; it has to be set up with a **static IP**, so that it's accessible by our **host**.
+2. Install and configure Docker in the VM.
+
+1. The virtual machine was set up with two **network interfaces**: one configured with `NAT` (to have internet access), whereas the other one was set up as a **Host-only adapter**, so that we can assign a **static IP** to the virtual machine.
+2. I installed Docker in it using the [repository approach](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository).
+
+## Exercise 19
+Here we'll have to configure the **docker node** running in the **virtual machine** as a **slave** of the local swarm in which your local machine is the **leader** (the command to take control of the VM is not requested).
+
+> In order to comply with the campaign for removal of racial terms from tech, it seems that the Docker documentation has replaced the term **leader** by **manager**, whereas the term **slave** is now **worker**. But still, the output of `docker swarm ls` shows the `MANAGER STATUS` as `Leader`.
+
+For this task we can follow two approaches:
+
+1. In the same **machine** we **initialized** the swarm, we could have **copied** the output line with a command/token that we could use to join the swarm in another **machine**.
+2. But if we forgot to copy the line mentioned above, we could run (in the **manager**) `docker swarm join-token worker`; then copy the line and paste it into the machine's shell you want to turn into a **worker**.
+
 ---
 [:arrow_backward:][back] ║ [:house:][home] ║ [:arrow_forward:][next]
 

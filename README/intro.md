@@ -1,7 +1,7 @@
 # Introduction
 A **Docker container** is a is a lightweight, standalone, executable package of software that includes everything needed to run an application: code, runtime, system tools, system libraries and settings.
 
-> Docker provides a consistent development environment: as long as every team member uses the same **docker image**, they will have available the same system libraries, and the same language runtime no matter the host machine they are using to actually develop.
+> One of the advantages of Docker is that it provides a **consistent development environment**: as long as every team member uses the same **docker image**, they will have available the same system libraries, and the same language runtime no matter the host machine they are using to actually develop.
 
 There are **three stages** when creating a container:
 
@@ -27,7 +27,7 @@ In **Windows** and **macOS** systems, installing [Docker Desktop](https://www.do
 sudo apt-get remove docker docker-engine docker.io containerd runc
 ```
 
-Once that's done, there are two ways of installing the [Docker Engine]():
+Once that's done, there are two ways of installing the [Docker Engine](https://docs.docker.com/engine):
 
 1. [Add the Docker repository to our system](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
 2. [Download the package and install manually](https://docs.docker.com/engine/install/ubuntu/#install-from-a-package)
@@ -78,17 +78,17 @@ To generate this message, Docker took the following steps:
     to your terminal.
 ```
 
-Docker uses a [client-server model](https://en.wikipedia.org/wiki/Client%E2%80%93server_model):
+The official documentation contains well explained information about the [Docker arquitecture](https://docs.docker.com/get-started/overview/#docker-architecture), here we'll just mention a few keypoints. Docker uses a [client-server model](https://en.wikipedia.org/wiki/Client%E2%80%93server_model):
 
-* On one side we have the **Docker client**.
-* On the other we have the **Docker daemon**.
+* On one side we have the **Docker client** (`dockerd`).
+* On the other we have the **Docker daemon** (`dockerd`).
 * We also have to mention here **Docker Hub**, also known as **Docker Registry**.
 
-The following diagram may help:
+Both `dockerd` and `docker` are known as the [Docker Engine](https://docs.docker.com/engine/). The following diagram may help:
 
 ![client-server model](./images/docker_architecture.png)
 
-The **user** does not interact directly with the **Docker daemon** (`containerd`), but with the **Docker client**, which is the command `docker`. This command accepts instructions from the user and communicates back and forth with the Docker daemon. In short, the `docker` command is just an interface to the Docker daemon, which is the one that does heavy lifting of building, running, and distributing our Docker containers.
+The **user** does not interact directly with the **Docker daemon**, but with the **Docker client**, which is the command `docker`. This command accepts instructions from the user and communicates back and forth with the Docker daemon. In short, the `docker` command is just an interface to the Docker daemon, which is the one that does heavy lifting of building, running, and distributing our Docker containers.
 
 > In the diagram above, both the **Docker daemon** and the **Docker client** are running on the same system (the client connects to `DOCKER_HOST`, which is the **socket** of the machine where the daemon runs). But as we are going to see a bit later, we can also connect a Docker client to a **remote** Docker daemon, or to a daemon that lives on a **virtual machine**.
 
@@ -98,4 +98,4 @@ The **user** does not interact directly with the **Docker daemon** (`containerd`
 <!-- navigation -->
 [home]: ../README.md
 [back]: ../README.md
-[next]: ./README/00_how_to_docker.md
+[next]: ./swarms.md
