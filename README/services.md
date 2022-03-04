@@ -50,8 +50,8 @@ docker service ps engineering-bay --filter "name=engineering-bay.1" --quiet
 ## Accessing the Logs of a Service or Task
 The [docker service logs](https://docs.docker.com/engine/reference/commandline/service_logs/) command can be used with:
 
-* Either the name or ID of a **service**; in this case it will display logs for **all** of the containers in that service.
-* Or with the ID of a **task**; it will only display logs from that particular **task**.
+* Either the `name` or `ID` of a **service**; in this case it will display logs for **all** of the containers in that service.
+* Or with the `ID` of a **task**; it will only display logs from that particular **task**.
 
 ---
 [:arrow_backward:][back] ║ [:house:][home] ║ [:arrow_forward:][next]

@@ -295,6 +295,65 @@ We could to do two things:
 1. Use the [docker service ps](https://docs.docker.com/engine/reference/commandline/service_ps/) command, to find the **ID** of any of the **tasks**. The `--filter` and `--quiet` options are useful here.
 2. Wrap the command above with some shell command expansion, and use is as argument for the [docker service logs](https://docs.docker.com/engine/reference/commandline/service_logs/) command. Use `--follow` to see a live version of the logs.
 
+## Exercise 25
+For this exercise we have to launch:
+
+1. A [42school/marine-squad](https://hub.docker.com/r/42school/marine-squad) service.
+2. This service will be named `marines`.
+3. It will be on the `overmind` network.
+4. It will have **two replicas**.
+
+According to the documentation provided at [hub.docker.com](https://hub.docker.com/r/42school/marine-squad), we must have an `orbital-command` running on your host or swarm, accessible with the same name into your network. To connect to this `orbital-command`, we must set:
+```
+OC_USERNAME : Username used to access to orbital-command
+OC_PASSWD : Password used to access to orbital-command
+```
+
+## Exercise 26
+Here we just have to display **all** the tasks of the `marines` service. We saw before that we can easily do that using the [docker service ps](https://docs.docker.com/engine/reference/commandline/service_ps/) command, passing the **name of the service**, `marines` in this case.
+
+## Exercise 27
+In this exercise we have to increase the number of replicas of the `marines` service up to twenty. Easily done using the [docker service scale](https://docs.docker.com/engine/reference/commandline/service_scale/); we just have to pass as argument `marines=20`, i.e., the **name of the service** then the **number of replicas** we need.
+
+Then, we're advised to check the **tasks** of the service:
+```
+docker service ps marines
+```
+
+And check the **logs**:
+```
+docker service logs marines			# use service name (or id)
+docker service logs oecy1dgngboy	# use task id
+```
+
+## Exercise 28
+For this exercise we're asked to force quit and delete **all** the **services** on the local **swarm**, **in one command**. Since it has to be in one command, we need to find a way of listing either the **name** of the services, or just their **IDs**:
+```
+docker service ls --format '{{.Name}}'	# List the services by name
+docker service ls --quiet				# List the services by id
+```
+
+Then, we could wrap any of the commands above with some shell command expansion, and pass it as argument to the [docker service rm](https://docs.docker.com/engine/reference/commandline/service_rm/) command, which can be used to remove one or more services.
+
+## Exercise 29
+Here we have to force quit and delete **all** the **containers** (whatever their status), **in one command**. Similarly to what we did above, first we'll list the **containers** either by `ID` or by `.Name`:
+```
+docker container ls --all --format '{{.Names}}'		# List the containers by name
+docker container ls --all --quiet					# List the containers by id
+```
+
+Then we could wrap any any of the commands above with some shell command expansion, and pass it as argument to the [docker container rm](https://docs.docker.com/engine/reference/commandline/container_rm/) command, which can be used to remove one or more containers.
+
+> Since some of the containers may be still running, we have to use the `--force` option (a better approach would be to stop the container before removing it, but we've been asked to remove them all **in one command**).
+
+## Exercise 30
+Finally, we have to delete all the images stored on your local machine machine, **in one command** as well. Yet again we'll use a similar strategy; first we'll list the images using the [docker image ls](https://docs.docker.com/engine/reference/commandline/image_ls/) command:
+```
+docker images --all --quiet						# List the images by id
+docker images --all --format '{{.Repository}}'	# List the images by name
+```
+
+Then we get rid of them all using the [docker image rm](https://docs.docker.com/engine/reference/commandline/image_rm/) command.
 ---
 [:arrow_backward:][back] ║ [:house:][home] ║ [:arrow_forward:][next]
 
