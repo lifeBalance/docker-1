@@ -258,6 +258,43 @@ For this task we can follow two approaches:
 1. In the same **machine** we **initialized** the swarm, we could have **copied** the output line with a command/token that we could use to join the swarm in another **machine**.
 2. But if we forgot to copy the line mentioned above, we could run (in the **manager**) `docker swarm join-token worker`; then copy the line and paste it into the machine's shell you want to turn into a **worker**.
 
+## Exercise 20
+In this exercise we have to create an [overlay network](https://docs.docker.com/network/overlay/) named `overmind`. It has to be **internal**, meaning that external access to the network is restricted.
+
+We can use the command `docker network inspect overmind` to check the properties of the network, and check that `Internal` is set to true.
+
+## Exercise 21
+For this task we have to:
+
+1. Launch a [RabbitMQ](https://www.rabbitmq.com/) as a [Docker service](https://docs.docker.com/engine/swarm/how-swarm-mode-works/services/) that will be named `orbital-command`.
+2. Define a specific **user** and **password** for this service (they can be whatever).
+3. This service will be on the `overmind` network.
+
+## Exercise 22
+To list all the services in the local swarm we use the [docker service ls](https://docs.docker.com/engine/reference/commandline/service_ls/) command.
+
+## Exercise 23
+For this exercise we have to:
+
+1. Launch a [42school/engineering-bay](https://hub.docker.com/r/42school/engineering-bay) service.
+2. This service will be named `engineering-bay`.
+3. It will be on the `overmind` network.
+4. It will have two replicas.
+
+According to the documentation provided at [hub.docker.com](https://hub.docker.com/r/42school/engineering-bay), we must have an `orbital-command` running on your host or swarm, accessible with the same name into your network. To connect to this `orbital-command`, we must set:
+```
+OC_USERNAME : Username used to access to orbital-command
+OC_PASSWD : Password used to access to orbital-command
+```
+
+## Exercise 24
+Here we have to get the **real-time logs** of **one the tasks** of the engineering-bay service.
+
+We could to do two things:
+
+1. Use the [docker service ps](https://docs.docker.com/engine/reference/commandline/service_ps/) command, to find the **ID** of any of the **tasks**. The `--filter` and `--quiet` options are useful here.
+2. Wrap the command above with some shell command expansion, and use is as argument for the [docker service logs](https://docs.docker.com/engine/reference/commandline/service_logs/) command. Use `--follow` to see a live version of the logs.
+
 ---
 [:arrow_backward:][back] ║ [:house:][home] ║ [:arrow_forward:][next]
 
