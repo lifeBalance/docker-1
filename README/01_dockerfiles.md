@@ -78,6 +78,72 @@ docker run --rm -it -p 9987:9987/udp -p 10011:10011 -p 30033:30033 rodrodri/team
 
 > Warning! Trying to download the package with the server using the `ADD` directive, was always crashing the server. I had to install `wget` and download the package with it.
 
+## Exercise 03
+In this exercise we have to create a `Dockerfile` to containerize Rails applications. The main constraint is that our `Dockerfile` must be *generic*, so that it can be called from the following `Dockerfile`:
+```
+FROM ft-rails:on-build
+EXPOSE 3000
+CMD ["rails", "s", "-b", "0.0.0.0", "-p", "3000"]
+```
+
+Our generic `Dockerfile`, must do the following:
+
+1. Install, via a [ruby image](https://hub.docker.com/_/ruby), all the necessary dependencies and gems.
+2. Copy our rails application to the `/opt/app` folder of your container.
+3. Launch the migrations and the db population for our Rails application.
+
+The child `Dockerfile` (see code above) should launch the rails server.
+
+1. Since [RoR](https://guides.rubyonrails.org/getting_started.html) has the following dependencies:
+
+	* Ruby itself (obviously included in the ruby official image).
+	* SQLite3
+	* Node.js
+	* Yarn
+
+I decided that a good approach was to spin a Ruby container and see what's in there:
+```
+docker run -it --rm ruby:buster bash
+ruby -v
+ruby 3.1.1p18 (2022-02-18 revision 53f5fc4236) [x86_64-linux]
+sqlite3
+bash: sqlite3: command not found
+node -v
+bash: node: command not found
+```
+
+Once the **dependencies** are installed on our **base image**, the remaining instructions on our `Dockerfile` will use the [ONBUILD](https://docs.docker.com/engine/reference/builder/#onbuild) directive. All the instructions we add using this directive, will be triggered after, when the **child image** is build. It's as if we were placing this instructions in the downstream image, right after its [FROM](https://docs.docker.com/engine/reference/builder/#from) directive.
+
+2. Since we're not well versed on [RoR](https://rubyonrails.org/), we'll just clone a sample Rails app to our **physical machine**:
+```
+git clone https://github.com/mhartl/sample_app_6th_ed.git sample_app
+```
+
+Then whe just have to `ONBUILD ADD` it to the **image**.
+
+3. The database migration will be done using `ONBUILD RUN`.
+
+Once our **parent** `Dockerfile` is done, we can build the image:
+```
+docker build -t ft-rails:on-build ft-rails/.
+[...]
+docker images
+REPOSITORY                  TAG        IMAGE ID       CREATED         SIZE
+ft-rails                    on-build   1bea42e61e31   6 seconds ago   934MB
+```
+
+> We can do so from the directory where we have the downstream `Dockerfile` (the one we were given in the subject's pdf). We just have to specify the path were the **parent** `Dockerfile` is.
+
+If everything went OK, we should see our new image tagged (per pdf requirements) as `on-build`. Now we can build the **children** image:
+```
+docker build -t rodrodri/ror_app ./
+```
+
+Finally, to test everything, we just have to run:
+```
+docker run --rm -p 3000:3000 rodrodri/ror_app
+```
+
 ---
 [:arrow_backward:][back] ║ [:house:][home] ║ [:arrow_forward:][next]
 
