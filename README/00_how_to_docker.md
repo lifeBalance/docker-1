@@ -335,6 +335,8 @@ docker service ls --quiet				# List the services by id
 
 Then, we could wrap any of the commands above with some shell command expansion, and pass it as argument to the [docker service rm](https://docs.docker.com/engine/reference/commandline/service_rm/) command, which can be used to remove one or more services.
 
+> During **evaluation**, run with `sh 28`
+
 ## Exercise 29
 Here we have to force quit and delete **all** the **containers** (whatever their status), **in one command**. Similarly to what we did above, first we'll list the **containers** either by `ID` or by `.Name`:
 ```
@@ -346,6 +348,8 @@ Then we could wrap any any of the commands above with some shell command expansi
 
 > Since some of the containers may be still running, we have to use the `--force` option (a better approach would be to stop the container before removing it, but we've been asked to remove them all **in one command**).
 
+> During **evaluation**, run with `sh 29`
+
 ## Exercise 30
 Finally, we have to delete all the images stored on your local machine machine, **in one command** as well. Yet again we'll use a similar strategy; first we'll list the images using the [docker image ls](https://docs.docker.com/engine/reference/commandline/image_ls/) command:
 ```
@@ -354,10 +358,13 @@ docker images --all --format '{{.Repository}}'	# List the images by name
 ```
 
 Then we get rid of them all using the [docker image rm](https://docs.docker.com/engine/reference/commandline/image_rm/) command.
+
+> During **evaluation**, run with `sh 30`
+
 ---
 [:arrow_backward:][back] ║ [:house:][home] ║ [:arrow_forward:][next]
 
 <!-- navigation -->
 [home]: ../README.md
 [back]: ../README.md
-[next]: ./README/01_dockerfiles.md
+[next]: ./01_dockerfiles.md

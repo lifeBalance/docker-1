@@ -14,7 +14,7 @@ docker build -t rodrodri/docker-vim .
 
 Finally, we'll use `docker run` to spin a **container** based on the **image** we just build. In this case we must specify the `-it` flags to be sure a **pseudo-tty** is allocated (otherwise vim won't work properly):
 ```
-docker run -it --rm rodrodri/vim
+docker run -it --rm rodrodri/docker-vim
 ```
 
 ## Exercise 01
@@ -123,9 +123,9 @@ Then whe just have to `ONBUILD ADD` it to the **image**.
 
 3. The database migration will be done using `ONBUILD RUN`.
 
-Once our **parent** `Dockerfile` is done, we can build the image:
+Once our **parent** `Dockerfile` is done, we can **build the image** passing the directory where the upstream `Dockerfile` is located:
 ```
-docker build -t ft-rails:on-build ft-rails/.
+docker build -t ft-rails:on-build ft-rails
 [...]
 docker images
 REPOSITORY                  TAG        IMAGE ID       CREATED         SIZE
@@ -158,7 +158,7 @@ docker build -t rodrodri/ginlab .
 
 To **run** the container:
 ```
-docker run -it --rm -p 8080:80 -p 8022:22 -p 8443:443 --privileged -e GITLAB_ROOT_EMAIL="12341234" rodrodri/ginlab bash
+docker run -it --rm -p 8080:80 -p 8022:22 -p 8443:443 --memory="8g" --cpus="3" --privileged -e GITLAB_ROOT_PASSWORD="12341234" rodrodri/ginlab bash
 ```
 
 > If you choose a **port** other than the standards (`80` and `443`), don't forget to add it at the end of the **domain name** when you try to access the site in the browser.
@@ -168,5 +168,5 @@ docker run -it --rm -p 8080:80 -p 8022:22 -p 8443:443 --privileged -e GITLAB_ROO
 
 <!-- navigation -->
 [home]: ../README.md
-[back]: ./README/00_how_to_docker.md
-[next]: ./README/02_bonus.md
+[back]: ./00_how_to_docker.md
+[next]: ./02_bonus.md
