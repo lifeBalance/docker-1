@@ -80,7 +80,7 @@ To generate this message, Docker took the following steps:
 
 The official documentation contains well explained information about the [Docker arquitecture](https://docs.docker.com/get-started/overview/#docker-architecture), here we'll just mention a few keypoints. Docker uses a [client-server model](https://en.wikipedia.org/wiki/Client%E2%80%93server_model):
 
-* On one side we have the **Docker client** (`dockerd`).
+* On one side we have the **Docker client** (`docker`).
 * On the other we have the **Docker daemon** (`dockerd`).
 * We also have to mention here **Docker Hub**, also known as **Docker Registry**.
 
